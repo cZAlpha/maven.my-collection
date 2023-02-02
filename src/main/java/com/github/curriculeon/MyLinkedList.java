@@ -55,8 +55,25 @@ public class MyLinkedList<SomeType> {
         }
     }
 
+    public void removeByIndex(int index) {
+        if (head == null) { // If the list is empty
+            System.out.println("The inputted value does not exist within the list.");
+            ;
+        } else if (index == 0) { // If the wanted index of removal is the head node's index
+            head = head.getNext();
+            size--;
+        } else {
+            // Iterate thru the linked list until
+            MyNode<SomeType> currentNode = head; // current node in iteration
+            for ( int i = 0 ; i < index ; i++ ){
+                currentNode = currentNode.getNext(); // iterates
+            }
+                currentNode = currentNode.getNext(); // Moves the head to the next node
+            }
+        }
+    }
+
     public SomeType get(int index){
-        SomeType data = null; // The data to be returned
         if (index >= size || index < 0) { // Yes I totally just copy-pasted this, I couldn't make it better myself to be honest.
             throw new IndexOutOfBoundsException();
         }
@@ -66,4 +83,6 @@ public class MyLinkedList<SomeType> {
         }
         return currentNode.getData(); // Returns the data
     }
+
+
 }
