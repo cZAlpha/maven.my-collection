@@ -22,6 +22,9 @@ public class MyNode<SomeType> {
 
     // * FAILS TEST 3 OF SETNEXTTEST*
     public void setNext(MyNode<SomeType> next) { // Sets the next node of the current node.
+        if(next == this) {
+            throw new IllegalArgumentException();
+        }
         this.next = next;
     }
 }
