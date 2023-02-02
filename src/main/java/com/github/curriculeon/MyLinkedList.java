@@ -9,7 +9,7 @@ public class MyLinkedList<SomeType> {
         this.size = 0;
     }
 
-    public MyLinkedList(SomeType valuesToBePopulatedWith) { // Custom Constructor
+    public MyLinkedList(SomeType... valuesToBePopulatedWith) { // Custom Constructor
     }
 
 
