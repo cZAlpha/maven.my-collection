@@ -34,6 +34,36 @@ public class MyLinkedList<SomeType> {
         }
         // Increments the size of the list if the new node has been appended to the list.
         size++;
+    }
 
+    public void remove(SomeType data){
+        if (head==null){ // If the list is empty
+            System.out.println("The inputted value does not exist within the list.");;
+        } else if (head.getData() == data){ // If the head is the node to be removed
+            head = head.getNext();
+            size--;
+        }
+        // Go thru the list until reaching the value wanted
+        MyNode<SomeType> currentNode = head;
+        while ( currentNode.getNext() != null){
+            if ( currentNode.getNext().getData() == data){
+                MyNode<SomeType> nextNode = currentNode.getNext(); // Creates a placeholder variable
+                nextNode = currentNode.getNext().getNext(); // Sets the next node to the double next node, if you will
+                size--; // Decrements the size of the list
+            }
+            currentNode = currentNode.getNext(); // Moves the head to the next node
+        }
+    }
+
+    public SomeType get(int index){
+        SomeType data = null; // The data to be returned
+        if (index >= size || index < 0) { // Yes I totally just copy-pasted this, I couldn't make it better myself to be honest.
+            throw new IndexOutOfBoundsException();
+        }
+        MyNode<SomeType> currentNode = head; // current node in iteration
+        for ( int i = 0 ; i < index ; i++ ){
+            currentNode = currentNode.getNext(); // iterates
+        }
+        return currentNode.getData(); // Returns the data
     }
 }
