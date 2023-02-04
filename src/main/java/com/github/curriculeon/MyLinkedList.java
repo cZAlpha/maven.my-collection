@@ -9,7 +9,17 @@ public class MyLinkedList<SomeType> {
         this.size = 0;
     }
 
-    public MyLinkedList(SomeType valuesToBePopulatedWith) { // Custom Constructor
+    public MyLinkedList(SomeType... valuesToBePopulatedWith) { // Custom Constructor
+        SomeType[] array = valuesToBePopulatedWith; // Setting own array equal to inputted array
+        int arrayLength = array.length; // Length of the inputted array
+
+        // Sets the head node equal to the first object in the inputted array
+        MyNode<SomeType> currentNode = (MyNode<SomeType>) array[0];
+        // Iterate through the linked list and set the current node equal to the jawn inputted
+        for ( int i = 1; i < arrayLength ; i++ ){
+            currentNode.setData(array[i]); // Sets the value
+            currentNode = currentNode.getNext(); // Iterates the linked list
+        }
     }
 
 
@@ -69,7 +79,6 @@ public class MyLinkedList<SomeType> {
                 currentNode = currentNode.getNext(); // iterates
             }
                 currentNode = currentNode.getNext(); // Moves the head to the next node
-            }
         }
     }
 
@@ -83,6 +92,4 @@ public class MyLinkedList<SomeType> {
         }
         return currentNode.getData(); // Returns the data
     }
-
-
 }

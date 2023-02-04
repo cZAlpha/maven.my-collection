@@ -1,10 +1,8 @@
 package com.github.curriculeon;
 
 public class MySet<T> {
-    // Holds The Length Of The Set (The Size)
-    private int size;
-    // Holds The Set As An Array
-    private T[] setArray;
+    private int size; // Holds The Length Of The Set (The Size)
+    private T[] setArray; // Holds The Set As An Array
 
     public MySet() {
         // Instantiate The Length Of The Set To Be Zero
