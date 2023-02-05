@@ -12,6 +12,8 @@ public class MyArrayList<SomeType> {
     }
 
     public MyArrayList(SomeType[] valuesToBePopulatedWith) { // Custom constructor
+        // Initiate the backbone array to be bigger than the length as the inputted array
+        this.content = (SomeType[])  new Object[valuesToBePopulatedWith.length + resize];
         // Loop through the array starting at "index" until reaching the length of the array given as "valuesToBePopulatedWith"
         // Each iteration of the loop, used teh "add" method that hasn't been created yet to add the given object to the array
         for (int i = index; i < valuesToBePopulatedWith.length; i++) {
