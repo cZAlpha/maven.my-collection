@@ -24,6 +24,6 @@ public class MySet<T> {
     public <T> boolean add(T object){
         // Returns True If The Item Trying To Be Added Is Unique Amongst The Contents Of The Set, Otherwise False.
        // setArray[] = T object;
-
+        return false;
     }
 }
