@@ -1,6 +1,8 @@
 package com.github.curriculeon;
 
-public class MyArrayList<SomeType> {
+import java.util.Iterator;
+
+public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
     // Variable Declarations
     private int index; // Holds current jawn in the jawn
     private SomeType[] content; // Array to hold shit
@@ -21,7 +23,8 @@ public class MyArrayList<SomeType> {
         }
     }
 
-    public boolean add(SomeType objectToBeAdded) { // Adds an object into the arraylist
+    @Override
+    public void add(SomeType objectToBeAdded) { // Adds an object into the arraylist
         Integer threshhold = content.length - 1; // The threshhold for resizing the array is 1 less than the current length
         if (index <= threshhold) { // Adds length to array if needed
             Integer newSize = content.length + resize; // Bigger array size
@@ -31,9 +34,11 @@ public class MyArrayList<SomeType> {
         }
         content[index] = objectToBeAdded; // Adds shit to the array
         index++; // Increment index bc we just added shit
-        return true; // return true bc shit was just added
+
+
     }
 
+    @Override
     public SomeType get(int index) { // Returns an object from the backbone arrray at the given index
         SomeType returnVar = null; // declares a return variable
         if (index < this.index && index > -1) { // if given index is a valid input
@@ -42,38 +47,68 @@ public class MyArrayList<SomeType> {
         return returnVar; // returns the wanted object if valid input
     }
 
-    public boolean remove(SomeType object) { // Removes a given object from the list
-        boolean returnVar = false; // return variable
+    @Override
+    public Boolean contains(SomeType objectToCheckFor) {
+        boolean returnVar = false;
+        boolean flag = false; // Flag that is only true if the objectToCheckFor in contained in the content array
+
+        // For loop that loops thru the content array and switches the flag to true if the objectToCheckFor is contained
+        for (int i = 0 ; i < content.length ; i++){
+            if ( content[i] == null ){ // Null catcher
+                continue;
+            } else if ( content[i].equals(objectToCheckFor) ){ // If the current iteration of the content array's object is equal to the objectToCheckFor
+                flag = true;
+            }
+        }
+
+        if ( flag == true ){ // Sets returnVar based on status of flag
+            returnVar = true;
+        } else {return null;} // Error Catcher ? I put this bc you need to have the capability to return null I believe
+
+        return returnVar; // Returns the status of flag, held as returnVar
+    }
+
+    @Override
+    public Integer size() {
+        return null;
+    }
+
+    @Override
+    public void remove(SomeType objectToRemove) {
         SomeType[] newContent = (SomeType[]) new Object[this.content.length]; // Declare new array
         Integer newIndex = 0;
-        for ( int i = 0 ; i < this.content.length ; i++){ // for loop to copy shit over except for the removed object
+        for ( int i = 0 ; i < this.content.length ; i++){ // for loop to copy sh*t over except for the removed object
             SomeType currentObject = this.content[i];
-            if (currentObject == null){ continue; } // Error catcher (hopefully)
-            if (!currentObject.equals(object)){ // if it isn't the object we're looking to remove
+            if (currentObject == null){ // Error catcher (hopefully)
+                continue;
+            }
+            if (!currentObject.equals(objectToRemove)){ // if it isn't the object we're looking to remove
                 newContent[newIndex] = content[i]; // copies over
                 newIndex++; // increments new index
             } else {
-                returnVar = true;
                 index--; // sets the index back one so that the object won't be copied
             }
         }
-        return returnVar; // returns whether the object was removed or not
     }
 
-    public boolean removeByIndex(int index) { // Removes an object from the list given its indecx
+    @Override
+    public void remove(int indexOfObjectToRemove) {
         SomeType[] newContent = (SomeType[]) new Object[this.content.length]; // Declare new array
-        boolean returnVar = false; // declare return variable
 
-        for ( int x = 0 ; x < index ; x++) { // For Loop that grabs all the values before the index that is to be removed
+        for (int x = 0; x < indexOfObjectToRemove; x++) { // For Loop that grabs all the values before the index that is to be removed
             newContent[x] = content[x]; // Copies over
         }
 
-        for ( int x = index + 1 ; x < content.length ; x++ ) { // For loop that grabs all values after
+        for (int x = indexOfObjectToRemove + 1; x < content.length; x++) { // For loop that grabs all values after
             newContent[x - 1] = content[x]; // Copies over
         }
 
         this.content = newContent; // copies array over
-        return returnVar; // returns return variable
+    }
+
+    @Override
+    public Iterator<SomeType> iterator() {
+        return null;
     }
 }
 
