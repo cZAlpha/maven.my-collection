@@ -57,13 +57,9 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
             if ( content[i] == null ){ // Null catcher
                 continue;
             } else if ( content[i].equals(objectToCheckFor) ){ // If the current iteration of the content array's object is equal to the objectToCheckFor
-                flag = true;
+                return true;
             }
         }
-
-        if ( flag == true ){ // Sets returnVar based on status of flag
-            returnVar = true;
-        } else {return null;} // Error Catcher ? I put this bc you need to have the capability to return null I believe
 
         return returnVar; // Returns the status of flag, held as returnVar
     }
@@ -110,6 +106,8 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
 
     }
 
+
+
     @Override
     public Iterator<SomeType> iterator() { // Not necessary to do because this method isn't being tested
         return null;
@@ -135,6 +133,7 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
             return list.get(currentIndex++);
         }
     }
+
 }
 
 
