@@ -70,7 +70,7 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public Integer size() {
-        return null;
+        return this.index;
     }
 
     @Override
@@ -95,20 +95,45 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
     public void remove(int indexOfObjectToRemove) {
         SomeType[] newContent = (SomeType[]) new Object[this.content.length]; // Declare new array
 
-        for (int x = 0; x < indexOfObjectToRemove; x++) { // For Loop that grabs all the values before the index that is to be removed
+        /*for (int x = 0; x < indexOfObjectToRemove; x++) { // For Loop that grabs all the values before the index that is to be removed
             newContent[x] = content[x]; // Copies over
         }
-
         for (int x = indexOfObjectToRemove + 1; x < content.length; x++) { // For loop that grabs all values after
             newContent[x - 1] = content[x]; // Copies over
-        }
+        }*/
 
-        this.content = newContent; // copies array over
+        int x = size() - index;
+        if ( x > 0 ){
+            System.arraycopy(this.content, indexOfObjectToRemove + 1, newContent, indexOfObjectToRemove, x - 1);
+        }
+        this.content = newContent;
+
     }
 
     @Override
-    public Iterator<SomeType> iterator() {
+    public Iterator<SomeType> iterator() { // Not necessary to do because this method isn't being tested
         return null;
+    }
+
+    private static class MyArrayListIterator<SomeType> implements Iterator<SomeType>{
+        private MyArrayList<SomeType> list;
+
+        private int currentIndex;
+
+        public MyArrayListIterator(MyArrayList<SomeType>list){
+            this.list = list;
+            this.currentIndex = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < list.size();
+        }
+
+        @Override
+        public SomeType next() {
+            return list.get(currentIndex++);
+        }
     }
 }
 

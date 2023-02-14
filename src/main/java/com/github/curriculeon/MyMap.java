@@ -1,26 +1,35 @@
 package com.github.curriculeon;
 
 public class MyMap<KeyType, ValueType> implements MyMapInterface<KeyType, ValueType> {
-//    void put(KeyType key, ValueType value);
-//    ValueType get(KeyType key);
-//    MySet<KeyType> getKeySet();
-//    MyCollectionInterface<ValueType> getValues();
-//    MySet<KeyValue<KeyType, ValueType>> getList();
-//    MyMapInterface<ValueType, KeyType> invert();
 
     KeyType keyValue; // Key
     ValueType value; // Value
+    private MyArrayList<KeyValue<KeyType, ValueType>> map; // Map
+
+    public MyMap() {
+        this.map = new MyArrayList<>();
+    }
+
+    public MyMap(MyArrayList<KeyValue<KeyType, ValueType>> map) {
+        this.map = map;
+    }
+
 
     @Override
     public void put(KeyType key, ValueType value){
-        new KeyValue(key,value); // creates new key value pair for the map
+        KeyValue keyvalue = new KeyValue<>(key,value); // Creates object to hold two objects in
+        map.add(keyvalue); // adds it to list
     }
 
     @Override
     public ValueType get(KeyType key){
-        ValueType returnVar = null;
-
-        return returnVar;
+        for(KeyValue<KeyType,ValueType> keyvalue : map) { // goes thru each key value in the map's arrayList backbone
+            KeyType currentKey = keyvalue.getKey(); // Sets the current key equal to the current arraylist index's keyvalue
+            if (currentKey.equals(key) ) { // If the current key is the one we want
+                return keyvalue.getValue(); // return the value of the current key
+            }
+        }
+        return null; // returns null if it isn't in the map
     }
 
     @Override

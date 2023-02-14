@@ -1,6 +1,8 @@
 package com.github.curriculeon;
 
-public class MySet<T> {
+import java.util.Iterator;
+
+public class MySet<T> implements MyCollectionInterface<T> {
     private final T[][] T = null; // Was a suggestion on how to get rid of an error, no idea wtf im even doing tbh
     private int index; // Holds The Length Of The Set (The Size)
     private T[] content; // Holds The Set As An Array
@@ -21,9 +23,38 @@ public class MySet<T> {
         }
     }
 
-    public <T> boolean add(T object){
-        // Returns True If The Item Trying To Be Added Is Unique Amongst The Contents Of The Set, Otherwise False.
-       // setArray[] = T object;
-        return false;
+    @Override
+    public void add(T objectToAdd) {
+
+    }
+
+    @Override
+    public void remove(T objectToRemove) {
+
+    }
+
+    @Override
+    public void remove(int indexOfObjectToRemove) {
+
+    }
+
+    @Override
+    public T get(int indexOfElement) {
+        return null;
+    }
+
+    @Override
+    public Boolean contains(T objectToCheckFor) {
+        return null;
+    }
+
+    @Override
+    public Integer size() {
+        return null;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }

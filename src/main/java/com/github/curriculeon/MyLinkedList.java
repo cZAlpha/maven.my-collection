@@ -1,6 +1,8 @@
 package com.github.curriculeon;
 
-public class MyLinkedList<SomeType> {
+import java.util.Iterator;
+
+public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     private MyNode<SomeType> head; // The current node accessed in the linked list
     private int size; // The length/size of the linked list (how many nodes are in it)
 
@@ -25,9 +27,9 @@ public class MyLinkedList<SomeType> {
 
     // The following methods are derived from the "myarraylist" set of tests, to coincide with the methods that the
     // tests are testing for.
-
+    @Override
     public void add(SomeType data){
-        MyNode<SomeType> nodeToBeAdded = null; // Set New Node Equal To Null.
+        MyNode<SomeType> nodeToBeAdded = new MyNode<>(data, null); // Set New Node Equal To Null.
         nodeToBeAdded.setData(data); // Set The Data For The New Node To The Inputted Data.
 
         if (head == null){ // If the linked list is empty
@@ -46,23 +48,29 @@ public class MyLinkedList<SomeType> {
         size++;
     }
 
-    public void remove(SomeType data){
+    @Override
+    public void remove(SomeType objectToRemove) {
         if (head==null){ // If the list is empty
             System.out.println("The inputted value does not exist within the list.");;
-        } else if (head.getData() == data){ // If the head is the node to be removed
+        } else if (head.getData() == objectToRemove){ // If the head is the node to be removed
             head = head.getNext();
             size--;
         }
         // Go thru the list until reaching the value wanted
         MyNode<SomeType> currentNode = head;
         while ( currentNode.getNext() != null){
-            if ( currentNode.getNext().getData() == data){
+            if ( currentNode.getNext().getData() == objectToRemove){
                 MyNode<SomeType> nextNode = currentNode.getNext(); // Creates a placeholder variable
                 nextNode = currentNode.getNext().getNext(); // Sets the next node to the double next node, if you will
                 size--; // Decrements the size of the list
             }
             currentNode = currentNode.getNext(); // Moves the head to the next node
         }
+    }
+
+    @Override
+    public void remove(int indexOfObjectToRemove) {
+
     }
 
     public void removeByIndex(int index) {
@@ -91,5 +99,20 @@ public class MyLinkedList<SomeType> {
             currentNode = currentNode.getNext(); // iterates
         }
         return currentNode.getData(); // Returns the data
+    }
+
+    @Override
+    public Boolean contains(SomeType objectToCheckFor) {
+        return null;
+    }
+
+    @Override
+    public Integer size() {
+        return null;
+    }
+
+    @Override
+    public Iterator<SomeType> iterator() {
+        return null;
     }
 }
