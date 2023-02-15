@@ -12,15 +12,13 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     }
 
     public MyLinkedList(SomeType... valuesToBePopulatedWith) { // Custom Constructor
-        SomeType[] array = valuesToBePopulatedWith; // Setting own array equal to inputted array
-        int arrayLength = array.length; // Length of the inputted array
+        int arrayLength = valuesToBePopulatedWith.length; // Length of the inputted array
 
         // Sets the head node equal to the first object in the inputted array
-        MyNode<SomeType> currentNode = (MyNode<SomeType>) array[0];
+        MyNode<SomeType> currentNode = new MyNode<>(valuesToBePopulatedWith[0], null);
         // Iterate through the linked list and set the current node equal to the jawn inputted
         for ( int i = 1; i < arrayLength ; i++ ){
-            currentNode.setData(array[i]); // Sets the value
-            currentNode = currentNode.getNext(); // Iterates the linked list
+            add(valuesToBePopulatedWith[i]);
         }
     }
 
@@ -30,7 +28,6 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     @Override
     public void add(SomeType data){
         MyNode<SomeType> nodeToBeAdded = new MyNode<>(data, null); // Set New Node Equal To Null.
-        nodeToBeAdded.setData(data); // Set The Data For The New Node To The Inputted Data.
 
         if (head == null){ // If the linked list is empty
             head = nodeToBeAdded;
@@ -103,7 +100,12 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public Boolean contains(SomeType objectToCheckFor) {
-        return null;
+        for (SomeType currentElement : this) {
+            if (currentElement == objectToCheckFor) {
+                return true;
+            }
+        }
+        return false; // Else returns false
     }
 
     @Override
@@ -113,6 +115,29 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public Iterator<SomeType> iterator() {
-        return null;
+        return new MyLinkedListIterator<>(this);
+    }
+
+    private static class MyLinkedListIterator<SomeType> implements Iterator<SomeType> {
+        private MyLinkedList<SomeType> list;
+        private MyNode<SomeType> currentNode;
+
+        public MyLinkedListIterator(MyLinkedList<SomeType> list) {
+            this.list = list;
+            this.currentNode = new MyNode<>();
+            this.currentNode.setData(list.get(0)); // this is the head
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public SomeType next() {
+            SomeType value = currentNode.getData();
+            currentNode = currentNode.getNext();
+            return value;
+        }
     }
 }

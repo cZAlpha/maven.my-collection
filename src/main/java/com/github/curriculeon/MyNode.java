@@ -27,4 +27,12 @@ public class MyNode<SomeType> {
         }
         this.next = next;
     }
+
+    @Override
+    public String toString() {
+        return "MyNode{" +
+                "data=" + data +
+                ", next=" + next +
+                '}';
+    }
 }

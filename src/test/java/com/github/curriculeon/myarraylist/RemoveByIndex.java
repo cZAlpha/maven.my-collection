@@ -35,6 +35,7 @@ public class RemoveByIndex {
         myCollection.remove(indexOfElementToRemove);
         Integer postRemoveLength = myCollection.size(); // get size of collection
         Integer actualPostRemoveLength = postRemoveLength; // get the actual post-removal length
+        Assert.assertEquals(actualPostRemoveLength, postRemoveLength);
 
         // then
         Assert.assertEquals(expectedPostRemoveLength, actualPostRemoveLength);

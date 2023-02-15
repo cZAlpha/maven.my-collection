@@ -1,21 +1,22 @@
 package com.github.curriculeon;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
     // Variable Declarations
     private int index; // Holds current jawn in the jawn
     private SomeType[] content; // Array to hold shit
-    private static final Integer resize = 5; // holds the additional length given to the backbone array when capacity is being reached
+    private static final Integer resize = 1; // holds the additional length given to the backbone array when capacity is being reached
 
     public MyArrayList() { // General constructor
         index = 0; // Sets index to zero
-        this.content = (SomeType[]) new Object[10]; // Sets the backbone array to a length of 10 (unspecified objects)
+        this.content = (SomeType[]) new Object[1]; // Sets the backbone array to a length of 10 (unspecified objects)
     }
 
     public MyArrayList(SomeType[] valuesToBePopulatedWith) { // Custom constructor
         // Initiate the backbone array to be bigger than the length as the inputted array
-        this.content = (SomeType[])  new Object[valuesToBePopulatedWith.length + resize];
+        this.content = (SomeType[]) new Object[valuesToBePopulatedWith.length + resize];
         // Loop through the array starting at "index" until reaching the length of the array given as "valuesToBePopulatedWith"
         // Each iteration of the loop, used teh "add" method that hasn't been created yet to add the given object to the array
         for (int i = index; i < valuesToBePopulatedWith.length; i++) {
@@ -34,8 +35,6 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
         }
         content[index] = objectToBeAdded; // Adds shit to the array
         index++; // Increment index bc we just added shit
-
-
     }
 
     @Override
@@ -53,10 +52,10 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
         boolean flag = false; // Flag that is only true if the objectToCheckFor in contained in the content array
 
         // For loop that loops thru the content array and switches the flag to true if the objectToCheckFor is contained
-        for (int i = 0 ; i < content.length ; i++){
-            if ( content[i] == null ){ // Null catcher
+        for (int i = 0; i < content.length; i++) {
+            if (content[i] == null) { // Null catcher
                 continue;
-            } else if ( content[i].equals(objectToCheckFor) ){ // If the current iteration of the content array's object is equal to the objectToCheckFor
+            } else if (content[i].equals(objectToCheckFor)) { // If the current iteration of the content array's object is equal to the objectToCheckFor
                 return true;
             }
         }
@@ -71,54 +70,40 @@ public class MyArrayList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public void remove(SomeType objectToRemove) {
-        SomeType[] newContent = (SomeType[]) new Object[this.content.length]; // Declare new array
-        Integer newIndex = 0;
-        for ( int i = 0 ; i < this.content.length ; i++){ // for loop to copy sh*t over except for the removed object
-            SomeType currentObject = this.content[i];
-            if (currentObject == null){ // Error catcher (hopefully)
-                continue;
-            }
-            if (!currentObject.equals(objectToRemove)){ // if it isn't the object we're looking to remove
-                newContent[newIndex] = content[i]; // copies over
-                newIndex++; // increments new index
-            } else {
-                index--; // sets the index back one so that the object won't be copied
+        int contentLength =  content.length;
+        int newContentLength = contentLength - 1;
+        SomeType[] newContent = (SomeType[]) new Object[newContentLength]; // Creates new generic array with one less length than content
+
+        int newContentCurrentIndex = 0;
+        for (int currentIndex = 0; currentIndex < content.length; currentIndex++) { // Loops thru the
+            SomeType currentObject = content[currentIndex];
+
+            if (currentObject != objectToRemove) { // Is current object is NOT objectToRemove
+                newContent[newContentCurrentIndex] = currentObject; // Populates new array
+                newContentCurrentIndex++;
             }
         }
+        index--;
+        this.content = newContent; // Copies array over
     }
 
     @Override
     public void remove(int indexOfObjectToRemove) {
-        SomeType[] newContent = (SomeType[]) new Object[this.content.length]; // Declare new array
-
-        /*for (int x = 0; x < indexOfObjectToRemove; x++) { // For Loop that grabs all the values before the index that is to be removed
-            newContent[x] = content[x]; // Copies over
-        }
-        for (int x = indexOfObjectToRemove + 1; x < content.length; x++) { // For loop that grabs all values after
-            newContent[x - 1] = content[x]; // Copies over
-        }*/
-
-        int x = size() - index;
-        if ( x > 0 ){
-            System.arraycopy(this.content, indexOfObjectToRemove + 1, newContent, indexOfObjectToRemove, x - 1);
-        }
-        this.content = newContent;
-
+        remove(get(indexOfObjectToRemove));
     }
-
 
 
     @Override
     public Iterator<SomeType> iterator() { // Not necessary to do because this method isn't being tested
-        return null;
+        return new MyArrayListIterator<>(this);
     }
 
-    private static class MyArrayListIterator<SomeType> implements Iterator<SomeType>{
+    private static class MyArrayListIterator<SomeType> implements Iterator<SomeType> {
         private MyArrayList<SomeType> list;
 
         private int currentIndex;
 
-        public MyArrayListIterator(MyArrayList<SomeType>list){
+        public MyArrayListIterator(MyArrayList<SomeType> list) {
             this.list = list;
             this.currentIndex = 0;
         }
