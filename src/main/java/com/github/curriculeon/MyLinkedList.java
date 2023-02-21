@@ -14,8 +14,6 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     public MyLinkedList(SomeType... valuesToBePopulatedWith) { // Custom Constructor
         int arrayLength = valuesToBePopulatedWith.length; // Length of the inputted array
 
-        // Sets the head node equal to the first object in the inputted array
-        MyNode<SomeType> currentNode = new MyNode<>(valuesToBePopulatedWith[0], null);
         // Iterate through the linked list and set the current node equal to the jawn inputted
         for ( int i = 1; i < arrayLength ; i++ ){
             add(valuesToBePopulatedWith[i]);
@@ -26,23 +24,18 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     // The following methods are derived from the "myarraylist" set of tests, to coincide with the methods that the
     // tests are testing for.
     @Override
-    public void add(SomeType data){
-        MyNode<SomeType> nodeToBeAdded = new MyNode<>(data, null); // Set New Node Equal To Null.
-
-        if (head == null){ // If the linked list is empty
-            head = nodeToBeAdded;
+    public void add(SomeType data){ // Don't waste memory
+        if ( head == null ) {
+            head = new MyNode<>(data, null); // New node which is head
         } else { // If it is not empty
-            // Iterate thru the linked list until the next node == null (when at the end of the list) and then
-            // Set the next node to the node to be added.
-            MyNode<SomeType> currentNode = head;
-            while ( currentNode.getNext() != null){
-                currentNode = currentNode.getNext();
+            MyNode<SomeType> node = head; // Sets node = head so iteration is possible
+            while (node.hasNext() && node.getNext() != null){
+                node = node.getNext();
             }
-            // Once end of the list has been reached, add new node
-            currentNode.setNext(nodeToBeAdded);
+            MyNode<SomeType> endNode = new MyNode<>(data, null);
+            node.setNext(endNode); // Once end of the list has been reached, add new node
         }
-        // Increments the size of the list if the new node has been appended to the list.
-        size++;
+        size++; // Increments the size of the list if the new node has been appended to the list.
     }
 
     @Override
@@ -70,22 +63,22 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
 
     }
 
-    public void removeByIndex(int index) {
-        if (head == null) { // If the list is empty
-            System.out.println("The inputted value does not exist within the list.");
-            ;
-        } else if (index == 0) { // If the wanted index of removal is the head node's index
-            head = head.getNext();
-            size--;
-        } else {
-            // Iterate thru the linked list until
-            MyNode<SomeType> currentNode = head; // current node in iteration
-            for ( int i = 0 ; i < index ; i++ ){
-                currentNode = currentNode.getNext(); // iterates
-            }
-                currentNode = currentNode.getNext(); // Moves the head to the next node
-        }
-    }
+//    public void removeByIndex(int index) {
+//        if (head == null) { // If the list is empty
+//            System.out.println("The inputted value does not exist within the list.");
+//            ;
+//        } else if (index == 0) { // If the wanted index of removal is the head node's index
+//            head = head.getNext();
+//            size--;
+//        } else {
+//            // Iterate thru the linked list until
+//            MyNode<SomeType> currentNode = head; // current node in iteration
+//            for ( int i = 0 ; i < index ; i++ ){
+//                currentNode = currentNode.getNext(); // iterates
+//            }
+//                currentNode = currentNode.getNext(); // Moves the head to the next node
+//        }
+//    }
 
     public SomeType get(int index){
         if (index >= size || index < 0) { // Yes I totally just copy-pasted this, I couldn't make it better myself to be honest.
@@ -100,12 +93,14 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public Boolean contains(SomeType objectToCheckFor) {
-        for (SomeType currentElement : this) {
-            if (currentElement == objectToCheckFor) {
+        MyNode<SomeType> currentNode = head; // keeps track of current node
+        while (currentNode != null){ // until you reach end of list, loop
+            if ( currentNode.getData() == objectToCheckFor ) {
                 return true;
             }
+            currentNode = currentNode.getNext(); // Iterates
         }
-        return false; // Else returns false
+        return false;
     }
 
     @Override

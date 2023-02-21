@@ -35,4 +35,8 @@ public class MyNode<SomeType> {
                 ", next=" + next +
                 '}';
     }
+
+    public boolean hasNext() {
+        return next != null;
+    }
 }
