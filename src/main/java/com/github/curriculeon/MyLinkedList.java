@@ -11,13 +11,15 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
         this.size = 0;
     }
 
+    @SafeVarargs
     public MyLinkedList(SomeType... valuesToBePopulatedWith) { // Custom Constructor
-        int arrayLength = valuesToBePopulatedWith.length; // Length of the inputted array
+
 
         // Iterate through the linked list and set the current node equal to the jawn inputted
-        for ( int i = 1; i < arrayLength ; i++ ){
-            add(valuesToBePopulatedWith[i]);
+        for (SomeType someType : valuesToBePopulatedWith) {
+            add(someType);
         }
+        size = valuesToBePopulatedWith.length;
     }
 
 
@@ -41,51 +43,45 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     @Override
     public void remove(SomeType objectToRemove) {
         if (head==null){ // If the list is empty
-            System.out.println("The inputted value does not exist within the list.");;
+            System.out.println("The inputted value does not exist within the list.");
+            return;
         } else if (head.getData() == objectToRemove){ // If the head is the node to be removed
             head = head.getNext();
             size--;
+            return;
         }
         // Go thru the list until reaching the value wanted
         MyNode<SomeType> currentNode = head;
-        while ( currentNode.getNext() != null){
+        while ( currentNode.getNext() != null && currentNode.hasNext() ){
             if ( currentNode.getNext().getData() == objectToRemove){
-                MyNode<SomeType> nextNode = currentNode.getNext(); // Creates a placeholder variable
+                MyNode<SomeType> nextNode; // Creates a placeholder variable
                 nextNode = currentNode.getNext().getNext(); // Sets the next node to the double next node, if you will
+                currentNode = nextNode;
                 size--; // Decrements the size of the list
             }
-            currentNode = currentNode.getNext(); // Moves the head to the next node
+            currentNode = currentNode.getNext(); // Moves the head to the next node (iterates)
         }
     }
 
     @Override
     public void remove(int indexOfObjectToRemove) {
-
+        // Go thru the list until reaching the value wanted
+        if(indexOfObjectToRemove > -1 && indexOfObjectToRemove < size) {
+            MyNode<SomeType> node = head;
+            for (int i = 0; i < indexOfObjectToRemove; i++) { // Iterate thru linked list until getting to wanted index
+                node = node.getNext(); // Moves the head to the next node (iterates)
+            }
+            remove(node.getData());
+        }
+        // Removes the object @ the wanted index
     }
-
-//    public void removeByIndex(int index) {
-//        if (head == null) { // If the list is empty
-//            System.out.println("The inputted value does not exist within the list.");
-//            ;
-//        } else if (index == 0) { // If the wanted index of removal is the head node's index
-//            head = head.getNext();
-//            size--;
-//        } else {
-//            // Iterate thru the linked list until
-//            MyNode<SomeType> currentNode = head; // current node in iteration
-//            for ( int i = 0 ; i < index ; i++ ){
-//                currentNode = currentNode.getNext(); // iterates
-//            }
-//                currentNode = currentNode.getNext(); // Moves the head to the next node
-//        }
-//    }
 
     public SomeType get(int index){
         if (index >= size || index < 0) { // Yes I totally just copy-pasted this, I couldn't make it better myself to be honest.
             throw new IndexOutOfBoundsException();
         }
         MyNode<SomeType> currentNode = head; // current node in iteration
-        for ( int i = 0 ; i < index ; i++ ){
+        for ( int i = 0 ; i < index ; i++ ) { // Iterates to the index
             currentNode = currentNode.getNext(); // iterates
         }
         return currentNode.getData(); // Returns the data
@@ -105,7 +101,7 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public Integer size() {
-        return null;
+        return size;
     }
 
     @Override
@@ -114,11 +110,10 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     }
 
     private static class MyLinkedListIterator<SomeType> implements Iterator<SomeType> {
-        private MyLinkedList<SomeType> list;
+
         private MyNode<SomeType> currentNode;
 
         public MyLinkedListIterator(MyLinkedList<SomeType> list) {
-            this.list = list;
             this.currentNode = new MyNode<>();
             this.currentNode.setData(list.get(0)); // this is the head
         }
