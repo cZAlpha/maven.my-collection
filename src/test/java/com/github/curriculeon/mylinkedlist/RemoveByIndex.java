@@ -45,18 +45,16 @@ public class RemoveByIndex {
         }
     }
 
-
     @Test
-    public void test0() {
+    public void test0() { // String test
         String[] valuesToPopulateCollection = new String[]{"The", "Quick", "Brown", "Fox"};
         String[] expectedElementSequence = new String[]{"The", "Brown", "Fox"};
         int indexOfElementToRemove = 1;
         test(indexOfElementToRemove, valuesToPopulateCollection, expectedElementSequence);
     }
 
-
     @Test
-    public void test1() {
+    public void test1() { // Integer test
         Integer[] valuesToPopulateCollection = new Integer[]{1,3,5,8,13};
         Integer[] expectedElementSequence = new Integer[]{3,5,8,13};
         int indexOfElementToRemove = 0;
@@ -64,7 +62,7 @@ public class RemoveByIndex {
     }
 
     @Test
-    public void test2() {
+    public void test2() { // Date test
         Date d1 = new Date();
         Date d2 = new Date();
         Date d3 = new Date();

@@ -1,8 +1,8 @@
 package com.github.curriculeon.mylinkedlist;
 
 import com.github.curriculeon.ImportChecker;
-import com.github.curriculeon.MyCollectionInterface;
 import com.github.curriculeon.MyLinkedList;
+import com.github.curriculeon.MyCollectionInterface;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,15 +13,8 @@ import java.util.Date;
  * @created 12/15/2019
  */
 @SuppressWarnings("all")
-public class RemoveTest {
-    // TO DO:
-    // Change the test in order to make it test for non-edge case instances of the removal method.
-
-    // Cohort: Verb
-    //      Rally together and get work done.
-
-    // Reference this for changing the class
-    // private <SomeType> void test(int indexOfElementToRemove, SomeType[] valuesToBePopulatedWith, SomeType[] expectedElementSequence) {
+public class RemoveHeadTest {
+    // Only tests for head removal (pause)
 
     //given
     private <SomeType> void test(SomeType... valuesToBePopulatedWith) {

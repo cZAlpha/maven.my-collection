@@ -44,11 +44,11 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     public void remove(SomeType objectToRemove) {
         if (head==null){ // If the list is empty
             System.out.println("The inputted value does not exist within the list.");
-            return;
+            return; // May be causing issue(s)
         } else if (head.getData() == objectToRemove){ // If the head is the node to be removed
             head = head.getNext();
             size--;
-            return;
+            return; // May be causing issue(s)
         }
         // Go thru the list until reaching the value wanted
         MyNode<SomeType> currentNode = head;
