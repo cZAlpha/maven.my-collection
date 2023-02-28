@@ -13,8 +13,8 @@ import java.util.Date;
  * @created 12/15/2019
  */
 @SuppressWarnings("all")
-public class RemoveHeadTest {
-    // Only tests for head removal (pause)
+public class RemoveHeadOfListSize1Test {
+    // Only tests for head removal (pause) with a list of size 1 ONLY
 
     //given
     private <SomeType> void test(SomeType... valuesToBePopulatedWith) {
@@ -35,7 +35,6 @@ public class RemoveHeadTest {
             Assert.assertFalse(myCollectionContainsValue);
         }
     }
-
 
     @Test
     public void test0() {

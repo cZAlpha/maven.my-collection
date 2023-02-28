@@ -21,11 +21,14 @@ public class AddTest {
         MyCollectionInterface<SomeType> myCollection = (MyCollectionInterface<SomeType>) myList;
 
         for (SomeType someValue : valuesToBePopulatedWith) {
+            Boolean myCollectionContainsValue = myCollection.contains(someValue);
+            Assert.assertFalse(myCollectionContainsValue);
+
             // when
             myCollection.add(someValue);
 
             // then
-            Boolean myCollectionContainsValue = myCollection.contains(someValue);
+            myCollectionContainsValue = myCollection.contains(someValue);
             Assert.assertTrue(myCollectionContainsValue);
         }
     }

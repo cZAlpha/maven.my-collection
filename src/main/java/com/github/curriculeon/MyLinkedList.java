@@ -41,11 +41,11 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
     }
 
     @Override
-    public void remove(SomeType objectToRemove) {
-        if (head==null){ // If the list is empty
+    public void remove(SomeType objectToRemove) {/*
+        if (head==null) { // If the list is empty
             System.out.println("The inputted value does not exist within the list.");
             return; // May be causing issue(s)
-        } else if (head.getData() == objectToRemove){ // If the head is the node to be removed
+        } else if (head.getData() == objectToRemove) { // If the head is the node to be removed
             head = head.getNext();
             size--;
             return; // May be causing issue(s)
@@ -60,6 +60,26 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
                 size--; // Decrements the size of the list
             }
             currentNode = currentNode.getNext(); // Moves the head to the next node (iterates)
+        }*/
+
+        // If statements may be blocking from properly reaching the head of non-small lists (lists of size > 1)
+
+        // From tha goat: Daniel Boyce
+        if ( head.getData() == objectToRemove ) {
+            head = head.getNext();
+            return;
+        }
+        MyNode<SomeType> current = head;
+        while( current != null && current.getNext() != null) {
+            MyNode<SomeType> next = current.getNext();
+            boolean isCorrectValue = next.getData() == objectToRemove;
+            if ( isCorrectValue ) {
+                MyNode<SomeType> swapped = next.getNext();
+                current.setNext(swapped);
+                size--;
+                break; // Breaks out of iteration if object is removed.
+            }
+            current = current.getNext(); // Iterate
         }
     }
 
@@ -71,9 +91,8 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
             for (int i = 0; i < indexOfObjectToRemove; i++) { // Iterate thru linked list until getting to wanted index
                 node = node.getNext(); // Moves the head to the next node (iterates)
             }
-            remove(node.getData());
+            remove(node.getData()); // Removes the object @ the wanted index
         }
-        // Removes the object @ the wanted index
     }
 
     public SomeType get(int index){
@@ -89,7 +108,7 @@ public class MyLinkedList<SomeType> implements MyCollectionInterface<SomeType> {
 
     @Override
     public Boolean contains(SomeType objectToCheckFor) {
-        MyNode<SomeType> currentNode = head; // keeps track of current node
+    MyNode<SomeType> currentNode = head; // keeps track of current node
         while (currentNode != null){ // until you reach end of list, loop
             if ( currentNode.getData() == objectToCheckFor ) {
                 return true;
